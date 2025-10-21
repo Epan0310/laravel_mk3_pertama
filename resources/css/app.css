@@ -1,0 +1,15 @@
+/* === app.css === */
+/* Import CSS dari package npm */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "admin-lte/dist/css/adminlte.min.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+/* Tambahan styling kecil */
+body {
+    background-color: #f4f6f9;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+}
