@@ -71,6 +71,7 @@ class StudentController extends Controller
     public function edit($id)
     {
         //
+        return view('admin.students.edit', compact('student'));
     }
 
     /**
