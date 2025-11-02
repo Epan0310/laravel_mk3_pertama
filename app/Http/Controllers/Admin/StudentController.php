@@ -68,10 +68,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
         //
-        return view('admin.students.edit', compact('student'));
+        return view('admin.student.edit', compact('student'));
     }
 
     /**
@@ -81,9 +81,18 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( Request $request, Student $student)
     {
         //
+        $validate = $request->validate([
+            'nis' => 'required',
+            'nama_lengkap' => 'required',
+            'jenis_kelamin' => 'required',
+            'nisn' => 'required|unique:students,nisn,'
+        ]);
+
+        $student->update($validate);
+        return redirect()->route('admin.students.index')->with('success', 'Data berhasil diupdate.');
     }
 
     /**
