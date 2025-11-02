@@ -38,18 +38,24 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-        $request->validate([
-            'nis' => 'required|unique:students',
-            'nama_lengkap' => 'required',
-            'jenis_kelamin' => 'required',
-            'nisn' => 'required|unique:students',
-        ]);
+{
+    // Validasi input
+    $validatedData = $request->validate([
+        'nis' => 'required|unique:students,nis',
+        'nama_lengkap' => 'required|string|max:255',
+        'jenis_kelamin' => 'required|in:L,P',
+        'nisn' => 'required|unique:students,nisn',
+    ]);
 
-        Student::create($request->all());
-        return redirect()->route('students.index')->with('success', 'Data berhasil disimpan.');
-    }
+    // Simpan data ke database
+    Student::create($validatedData);
+
+    // Redirect dengan pesan sukses
+    return redirect()
+        ->route('admin.students.index')
+        ->with('success', 'Data siswa berhasil disimpan.');
+}
+
 
     /**
      * Display the specified resource.
@@ -57,9 +63,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Student $student)
     {
         //
+        return view('admin.student.show', compact('student'));
     }
 
     /**
@@ -101,8 +108,13 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Student $student)
     {
         //
+        $student->delete();
+
+        return redirect()
+        ->route('admin.students.index')
+        ->with('success', 'Data siswa berhasil dihapus.');
     }
 }
