@@ -1,16 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\HomeController; // <-- [MODIFIKASI] Ditambahkan
 
-Route::get('/', [LandingController::class, 'index'])->name('landing');
+// [MODIFIKASI] Rute lama ke landing page kita non-aktifkan (comment)
+// Route::get('/', [LandingController::class, 'index'])->name('landing');
 
-// Ini sudah BENAR. ->name('admin.') akan memberi prefix nama 'admin.' 
-// ke semua rute di dalam grup ini.
+// [MODIFIKASI BARU] Rute root '/' sekarang akan redirect ke halaman 'login'
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+Auth::routes();
+
+// [MODIFIKASI] Rute /home ini penting untuk redirect default
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// Grup rute admin Anda (tidak perlu diubah)
 Route::prefix('admin')->name('admin.')->group(function () {
     
     // Ini benar -> Nama rute akan menjadi 'admin.dashboard'
@@ -18,20 +30,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Ini benar -> Nama rute akan menjadi 'admin.students.index', 'admin.students.edit', dll.
     Route::resource('students', StudentController::class);
-
     
-    // [MODIFIKASI DI SINI]
-    // 1. Hapus `.names('admin.courses')`. Ini menyebabkan konflik dengan nama grup.
-    // 2. Gunakan CourseController::class yang singkat (karena sudah di-'use' di atas).
-    //
-    // Ini sekarang akan OTOMATIS membuat rute 'admin.courses.index', dll.
+    // Ini sudah benar
     Route::resource('courses', CourseController::class);
 
-
-    // [MODIFIKASI DI SINI]
-    // 1. Hapus 'admin.' dari `.name()`.
-    // 2. Gunakan SettingController::class yang singkat.
-    //
-    // Ini sekarang akan OTOMATIS membuat rute 'admin.settings.index'.
+    // Ini sudah benar
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
 });
+

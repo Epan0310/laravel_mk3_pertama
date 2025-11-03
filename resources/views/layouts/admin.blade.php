@@ -57,9 +57,16 @@
           <a href="#" class="dropdown-item">
             <i class="fas fa-user-circle me-2"></i> Profil
           </a>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-sign-out-alt me-2"></i> Keluar
-          </a>
+          <!-- [MODIFIKASI] Ganti link <a> biasa dengan Form -->
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <a href="{{ route('logout') }}" class="dropdown-item"
+              onclick="event.preventDefault();
+                        this.closest('form').submit();">
+                <i class="fas fa-sign-out-alt me-2"></i> Keluar
+            </a>
+        </form>
         </div>
       </li>
     </ul>
