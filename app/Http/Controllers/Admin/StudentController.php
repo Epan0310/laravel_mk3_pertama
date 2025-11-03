@@ -38,23 +38,18 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
+    {
     // Validasi input
-    $validatedData = $request->validate([
-        'nis' => 'required|unique:students,nis',
-        'nama_lengkap' => 'required|string|max:255',
-        'jenis_kelamin' => 'required|in:L,P',
+    $request->validate([
+        'nis' => 'required',
+        'nama_lengkap' => 'required',
+        'jenis_kelamin' => 'required',
         'nisn' => 'required|unique:students,nisn',
     ]);
 
-    // Simpan data ke database
-    Student::create($validatedData);
-
-    // Redirect dengan pesan sukses
-    return redirect()
-        ->route('admin.students.index')
-        ->with('success', 'Data siswa berhasil disimpan.');
-}
+    Student::create ($request->all());
+    return redirect()->route('admin.students.index')->with('success', 'Data siswa berhasil ditambahkan.');
+    }
 
 
     /**
