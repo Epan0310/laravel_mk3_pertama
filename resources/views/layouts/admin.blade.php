@@ -50,7 +50,7 @@
       <!-- User dropdown -->
       <li class="nav-item dropdown">
         <a class="nav-link d-flex align-items-center" data-bs-toggle="dropdown" href="#">
-          <img src="{{ asset('images/avatar.png') }}" class="img-circle elevation-2 me-2" alt="User Image" width="30">
+          <img src="{{ asset('image/avatar.jpg') }}" class="img-circle elevation-2 me-2" alt="User Image" width="30">
           <span>Admin</span>
         </a>
         <div class="dropdown-menu dropdown-menu-end">
@@ -70,8 +70,8 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link text-center">
-      <img src="{{ asset('images/logo.png') }}" alt="Dilesin Logo" class="brand-image img-circle elevation-3" style="opacity:.9">
-      <span class="brand-text font-weight-light">Dilesin Admin</span>
+      <img src="{{ asset('image/logo.jpg') }}" alt="Dilesin Logo" class="brand-image img-circle elevation-3" style="opacity:.9">
+      <span class="brand-text font-weight-light">Admin Turu</span>
     </a>
 
     <!-- Sidebar -->
@@ -86,21 +86,21 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('admin.students.index') }}" class="nav-link {{ request()->is('admin/students*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
               <p>Manajemen Pengguna</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('admin.courses.index') }}" class="nav-link {{ request()->is('admin/courses*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-book"></i>
               <p>Kursus</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->is('admin/settings*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-cog"></i>
               <p>Pengaturan</p>
             </a>
